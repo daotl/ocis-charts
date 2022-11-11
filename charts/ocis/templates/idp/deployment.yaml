@@ -32,6 +32,8 @@ spec:
             runAsNonRoot: true
             runAsUser: {{ .Values.securityContext.runAsUser }}
             runAsGroup: {{ .Values.securityContext.runAsGroup }}
+            # Commnet out to fix error:
+            # FTL could not create default config error="mkdir /var/lib/ocis/idp: read-only file system" service=idp
             readOnlyRootFilesystem: true
           env:
             - name: MICRO_REGISTRY
@@ -72,6 +74,11 @@ spec:
 
             - name: IDP_ENCRYPTION_SECRET_FILE
               value: /etc/ocis/idp/encryption.key
+
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
 
           livenessProbe:
             httpGet:

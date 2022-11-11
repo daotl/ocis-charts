@@ -81,6 +81,11 @@ spec:
                   name: {{ $.Values.secretRefs.jwtSecretRef }}
                   key: jwt-secret
 
+            {{- range $name, $value := $.Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           livenessProbe:
             exec:
               command:

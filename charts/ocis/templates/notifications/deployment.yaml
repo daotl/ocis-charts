@@ -91,6 +91,11 @@ spec:
                   name: {{ .Values.secretRefs.machineAuthApiKeySecretRef }}
                   key: machine-auth-api-key
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           # TODO: This service does not currently provide a debug port, re-enable this once that is implemented
           # See: https://github.com/owncloud/ocis-charts/issues/111
           # livenessProbe:

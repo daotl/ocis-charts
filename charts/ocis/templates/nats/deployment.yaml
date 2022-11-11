@@ -43,6 +43,8 @@ spec:
             runAsNonRoot: true
             runAsUser: {{ .Values.securityContext.runAsUser }}
             runAsGroup: {{ .Values.securityContext.runAsGroup }}
+            # Commnet out to fix error:
+            # "Can't start JetStream: could not create storage directory - mkdir /var/lib/ocis/nats: read-only file system service=nats"
             readOnlyRootFilesystem: true
           env:
             - name: NATS_LOG_COLOR
@@ -59,6 +61,12 @@ spec:
               value: "0.0.0.0"
             - name: NATS_NATS_PORT
               value: "9233"
+
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
 
             # - name: NATS_DEBUG_ADDR
             #   value: 0.0.0.0:9234

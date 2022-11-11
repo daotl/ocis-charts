@@ -114,6 +114,11 @@ spec:
             - name: IDM_LDAPS_KEY
               value: /etc/ocis/ldap-cert/ldap.key
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           livenessProbe:
             # TODO: IDM does not currently provide a debug port, re-enable this once that is implemented
             # httpGet:

@@ -65,6 +65,12 @@ spec:
 
             - name: STORE_GRPC_ADDR
               value: 0.0.0.0:9460
+
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
             - name: STORE_DEBUG_ADDR
               value: 0.0.0.0:9464
 

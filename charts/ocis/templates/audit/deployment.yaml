@@ -52,4 +52,9 @@ spec:
             - name: AUDIT_LOG_TO_CONSOLE
               value: "true"
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           resources: {{ toYaml .Values.resources | nindent 12 }}

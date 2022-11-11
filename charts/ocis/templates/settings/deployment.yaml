@@ -88,6 +88,11 @@ spec:
                   name: {{ .Values.secretRefs.storageSystemSecretRef }}
                   key: user-id
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           livenessProbe:
             httpGet:
               path: /healthz

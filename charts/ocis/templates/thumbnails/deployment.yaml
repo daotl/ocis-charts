@@ -86,6 +86,11 @@ spec:
                   name: {{ .Values.secretRefs.thumbnailsSecretRef }}
                   key: thumbnails-transfer-secret
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           livenessProbe:
             httpGet:
               path: /healthz

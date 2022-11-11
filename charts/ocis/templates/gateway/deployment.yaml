@@ -108,6 +108,11 @@ spec:
                   name: {{ .Values.secretRefs.transferSecretSecretRef }}
                   key: transfer-secret
 
+            {{- range $name, $value := .Values.commonEnvOverride }}
+            - name: "{{ $name }}"
+              value: "{{ $value }}"
+            {{- end }}
+
           livenessProbe:
             httpGet:
               path: /healthz
